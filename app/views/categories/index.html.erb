@@ -1,6 +1,6 @@
 
 <p id="notice"><%= notice %></p>
-
+<p><%= link_to("go to products", products_path) %></p>
 <h1>Categories</h1>
 
 <table>
@@ -17,11 +17,15 @@
       <tr>
         <td><%= category.name %></td>
         <td><%= category.description %></td>
-        <td><%= link_to(image_tag(category.products.first.image), like_category_path(category.products.first), remote: true) %></td>
-        <td>likes<span id="likes"><%= category.products.first.like %></span></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% category.products.each do |product|%>
+          <tr>
+            <td><%= link_to(image_tag(product.image), like_category_path(product), remote: true) %></td>
+            <td>likes(<span id=<%= "like"+product.id.to_s %>><%= product.like %></span>)</td>
+            <td><%= link_to 'Show', product.category %></td>
+            <td><%= link_to 'Edit', edit_category_path(product.category) %></td>
+            <td><%= link_to 'Destroy', product.category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+          <% end %>  
       </tr>
     <% end %>
   </tbody>

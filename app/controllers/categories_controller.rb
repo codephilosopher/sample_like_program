@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.includes(:products).all
   end
 
   # GET /categories/1
@@ -65,6 +65,7 @@ class CategoriesController < ApplicationController
     product = Product.find(params[:id])
     product.increment!(:like, 1)
     @like_count = product.like
+    @like_index = params[:id]
     respond_to do |format|
       format.html
       format.js
